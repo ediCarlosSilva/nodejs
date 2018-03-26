@@ -4,9 +4,23 @@ module.exports = function(app) {
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
-        produtosDAO.lista(function(err, results) {
+        produtosDAO.lista(function(erros, resultados) {
             // res.send(results);
-            res.render('produtos/lista', { lista: results })
+            res.render('produtos/lista', { lista: resultados })
+        });
+
+        connection.end();
+
+    });
+
+    app.get('/produtos/json', function(req, res) {
+
+        var connection = app.infra.connectionFactory();
+        var produtosDAO = new app.infra.ProdutosDAO(connection);
+
+        produtosDAO.lista(function(erros, resultados) {
+            // res.send(results);
+            res.json(resultados);
         });
 
         connection.end();
