@@ -5,22 +5,14 @@ module.exports = function(app) {
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
         produtosDAO.lista(function(erros, resultados) {
-            // res.send(results);
-            res.render('produtos/lista', { lista: resultados })
-        });
-
-        connection.end();
-
-    });
-
-    app.get('/produtos/json', function(req, res) {
-
-        var connection = app.infra.connectionFactory();
-        var produtosDAO = new app.infra.ProdutosDAO(connection);
-
-        produtosDAO.lista(function(erros, resultados) {
-            // res.send(results);
-            res.json(resultados);
+            res.format({
+                html : function() {
+                    res.render('produtos/lista', { lista: resultados });
+                },
+                json : function() {
+                    res.json(resultados);
+                }
+            })
         });
 
         connection.end();
@@ -34,13 +26,14 @@ module.exports = function(app) {
     app.post('/produtos', function(req, res) {
 
         var produto = req.body;
-        // console.log(produto);
+        console.log(produto);
 
 
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
         produtosDAO.salva(produto, function(erros, resultados) {
+            console.log(erros);
             res.redirect('/produtos');
         })
 
