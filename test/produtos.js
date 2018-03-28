@@ -10,4 +10,18 @@ describe('#ProdutosController', function() {
             .expect('Content-Type', /json/)
             .expect(200, done);
     });
+
+    it('#cadastro de novo produto com dados inválidos', function(done) {
+        
+        request.post('/produtos')
+            .send({titulo : "", descricao : "novo livro"})
+            .expect(400, done);
+    });
+
+    it('#cadastro de novo produto com dados válidos', function(done) {
+        
+        request.post('/produtos')
+            .send({titulo : "título", descricao : "novo livro", preco : 20.50})
+            .expect(302, done);
+    });
 });
