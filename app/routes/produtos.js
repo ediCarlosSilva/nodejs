@@ -1,10 +1,14 @@
 module.exports = function(app) {
-    app.get('/produtos', function(req, res) {
+    app.get('/produtos', function(req, res, next) {
 
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
         produtosDAO.lista(function(erros, resultados) {
+            // console.log(erros);
+            if (erros) {
+                return next(erros);
+            }
             res.format({
                 html: function() {
                     res.render('produtos/lista', { lista: resultados });
@@ -34,7 +38,7 @@ module.exports = function(app) {
         var erros = req.validationErrors();
 
         if (erros) {
-            console.log(erros);
+            // console.log(erros);
             res.status(400);
             res.format({
                 html: function() {
@@ -51,7 +55,7 @@ module.exports = function(app) {
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
         produtosDAO.salva(produto, function(erros, resultados) {
-            console.log(erros);
+            // console.log(erros);
             res.redirect('/produtos');
         })
 
