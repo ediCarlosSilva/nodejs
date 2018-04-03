@@ -3,9 +3,12 @@
     "version": "1.0.0",
     "description": "site da casa do codigo",
     "main": "index.js",
+    "engines": {
+        "node": "8.9.2"
+    },
     "scripts": {
-        "start": "set NODE_ENV=test node node_modules/mocha/bin/mocha",
-        "test": "mocha"
+        "start": "node app",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Edi Carlos",
     "license": "ISC",
