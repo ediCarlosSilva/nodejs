@@ -1,4 +1,4 @@
-create table produtos (
+create table livros (
     id int(11) not null primary key auto_increment,
     titulo varchar(255) default null,
     descricao text,
